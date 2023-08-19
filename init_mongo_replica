@@ -1,11 +1,10 @@
 #! /usr/bin/env bash
 
-# Wait for MongoDB to start
-until mongo --eval "db.version()" > /dev/null 2>&1; do
-  echo "Waiting for Mongo to start..."
+until mongo --eval "db.version()" > /dev/null 2>&1
+do
+  echo "Waiting for Mongo to start.."
   sleep 1
 done
 
-# Initiate the replica set
-echo "Initiating Mongo replica set..."
+echo "Initiating Mongo replica set.."
 mongo --eval "rs.initiate({ _id: 'overleaf', members: [ { _id: 0, host: 'localhost:27017' } ] })" > /dev/null
