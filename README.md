@@ -1,6 +1,6 @@
 # hosted-overleaf
 
-This repository contains the necessary scripts to self-host the [Overleaf Community Edition](https://github.com/overleaf/toolkit/) on an x86-64 AWS EC2 instance. Although a poor practice, services are managed with [Supervisor](http://supervisord.org/) instead of [Docker Compose](https://docs.docker.com/compose/). At the minimum, the image takes ~7.25 GB of disk space and ~800 MB of RAM on idle.
+This repository contains the necessary scripts to self-host the [Overleaf Community Edition](https://github.com/overleaf/toolkit/) on an x86-64 AWS EC2 instance. Although a poor practice, services are managed with [Supervisor](http://supervisord.org/) instead of [Docker Compose](https://docs.docker.com/compose/). At the minimum, the image occupies ~7.25 GB of disk space and ~800 MB of RAM on idle.
 
 ## Development
 
