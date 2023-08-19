@@ -1,0 +1,22 @@
+FROM sharelatex/sharelatex:latest
+
+WORKDIR /
+
+RUN tlmgr install scheme-full
+
+RUN curl -fsSL https://packages.redis.io/gpg | gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+RUN curl -fsSL https://pgp.mongodb.com/server-4.4.asc | gpg -o /usr/share/keyrings/mongodb-server-4.4.gpg --dearmor
+
+RUN echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-4.4.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+RUN echo "deb [ signed-by=/usr/share/keyrings/redis-archive-keyring.gpg ] https://packages.redis.io/deb $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/redis.list
+
+RUN apt update
+RUN apt install -y supervisor redis mongodb-org
+RUN rm -rf /var/lib/apt/lists/*
+RUN npm install -g npm@latest
+RUN mkdir -p /data/mongo /data/redis
+
+COPY supervisord.conf ./
+COPY init_mongo_replica ./
+
+ENTRYPOINT ["supervisord", "-c", "supervisord.conf"]
